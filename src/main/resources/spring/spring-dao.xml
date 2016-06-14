@@ -8,12 +8,12 @@
     <!-- 1：配置数据库相关参数properties的属性 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <!-- 2；数据库连接池 -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <!-- 配置连接池属性 -->
-        <property name="driverClass" value="${driver}"/>
-        <property name="jdbcUrl" value="${url}"/>
-        <property name="user" value="${username}"/>
-        <property name="password" value="${password}"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
 
         <!-- c3p0连接池的私有属性 -->
         <property name="maxPoolSize" value="30"/>
@@ -23,7 +23,7 @@
         <!-- 获取连接超时时间 -->
         <property name="checkoutTimeout" value="1000"/>
         <!-- 获取连接失败时的重试次数 -->
-        <property name="acquireRetryAttempts" value="2"/>
+        <property name="acquireRetryAttempts" value="3"/>
     </bean>
     <!-- 约定大于配置 -->
     <!-- 3：配置sqlSessionFactory对象 -->
@@ -43,5 +43,11 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- 给出需要扫描的Dao接口包 -->
         <property name="basePackage" value="org.seckill.dao"/>
+    </bean>
+
+    <!-- RedisDao -->
+    <bean id="redisDao" class="org.seckill.dao.cache.RedisDao">
+        <constructor-arg index="0" value="localhost"/>
+        <constructor-arg index="1" value="6379"/>
     </bean>
 </beans>

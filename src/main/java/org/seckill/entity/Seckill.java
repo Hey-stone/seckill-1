@@ -1,5 +1,6 @@
 package org.seckill.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,9 +19,6 @@ public class Seckill {
     private Date endTime;
 
     private Date createTime;
-
-    //多对一
-    private Seckill seckill;
 
     public long getSeckillId() {
         return seckillId;
@@ -68,14 +66,6 @@ public class Seckill {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Seckill getSeckill() {
-        return seckill;
-    }
-
-    public void setSeckill(Seckill seckill) {
-        this.seckill = seckill;
     }
 
     @Override
